@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type Board struct {
 	cells [][]int
@@ -8,6 +11,16 @@ type Board struct {
 
 func (b *Board) Init() {
 	b.cells = Make2D[int](4, 4)
+	startCount := 2
+	i := 0
+	for i < startCount {
+		row := int64(rand.Float64() * 4.0)
+		col := int64(rand.Float64() * 4.0)
+		fmt.Printf("%d:%d\n", row, col)
+		b.cells[row][col] = 2
+		i++
+	}
+
 }
 
 func (b *Board) ToString() string {
