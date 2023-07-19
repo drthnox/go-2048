@@ -32,6 +32,7 @@ func main() {
 		case "d":
 			moveRight()
 		}
+		board.Add2()
 		fmt.Printf("%s\n", board.ToString())
 	}
 }
