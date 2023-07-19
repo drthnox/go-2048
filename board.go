@@ -9,18 +9,24 @@ type Board struct {
 	cells [][]int
 }
 
+var startCount = 2
+
 func (b *Board) Init() {
 	b.cells = Make2D[int](4, 4)
-	startCount := 2
-	i := 0
-	for i < startCount {
-		row := int64(rand.Float64() * 4.0)
-		col := int64(rand.Float64() * 4.0)
-		fmt.Printf("%d:%d\n", row, col)
-		b.cells[row][col] = 2
-		i++
-	}
+	b.Add2()
+}
 
+func (b *Board) Add2() {
+	row := int64(rand.Float64() * 4.0)
+	col := int64(rand.Float64() * 4.0)
+	for {
+		if b.cells[row][col] == 0 {
+			b.cells[row][col] = 2
+			break
+		}
+		row = int64(rand.Float64() * 4.0)
+		col = int64(rand.Float64() * 4.0)
+	}
 }
 
 func (b *Board) ToString() string {
