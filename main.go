@@ -9,12 +9,10 @@ import (
 
 func main() {
 	board := NewBoard()
+	gameLogic := NewGameLogic(board)
 	reader := bufio.NewReader(os.Stdin)
 	for {
-		fmt.Print("> ")
-		input, _ := reader.ReadString('\n')
-		input = strings.Replace(input, "\n", "", -1)
-		input = strings.ToLower(input)
+		input := getInput(reader)
 		if input == "q" {
 			break
 		}
@@ -24,39 +22,38 @@ func main() {
 		case "h":
 			showHelp()
 		case "w":
-			moveUp()
+			gameLogic.moveUp()
 		case "s":
-			moveDown()
+			gameLogic.moveDown()
 		case "a":
-			moveLeft()
+			gameLogic.moveLeft()
 		case "d":
-			moveRight()
+			gameLogic.moveRight()
 		}
 		board.Add2()
 		fmt.Printf("%s\n", board.ToString())
+		if gameLogic.isFinished() {
+			fmt.Println("Board is full, cannot continue")
+			break
+		} else {
+			fmt.Println("Empty cells remain, can continue")
+		}
 	}
+	fmt.Printf("Game Over! Result is %v\n", gameLogic.GetResult())
+}
+
+func getInput(reader *bufio.Reader) string {
+	fmt.Print("> ")
+	input, _ := reader.ReadString('\n')
+	input = strings.Replace(input, "\n", "", -1)
+	input = strings.ToLower(input)
+	return input
 }
 
 func NewBoard() *Board {
 	board := new(Board)
 	board.Init()
 	return board
-}
-
-func moveRight() {
-
-}
-
-func moveLeft() {
-
-}
-
-func moveDown() {
-
-}
-
-func moveUp() {
-
 }
 
 func showHelp() {
