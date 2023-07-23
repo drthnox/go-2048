@@ -24,14 +24,17 @@ func (gameLogic *GameLogic) GameState() string {
 }
 
 func (gameLogic *GameLogic) HasMetWinCon() bool {
-	for _, row := range gameLogic.board.cells {
-		for i, _ := range row {
-			if row[i] != 2048 {
-				return false
+	if gameLogic.isFinished() {
+		for _, row := range gameLogic.board.cells {
+			for i, _ := range row {
+				if row[i] != 2048 {
+					return false
+				}
 			}
 		}
+		return true
 	}
-	return true
+	return false
 }
 
 func (gameLogic *GameLogic) moveRight() {
