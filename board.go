@@ -11,7 +11,11 @@ type Board struct {
 
 func (b *Board) Init() {
 	b.cells = Make2D[int](4, 4)
-	b.Add2()
+	for _, row := range b.cells {
+		for i, _ := range row {
+			row[i] = 0
+		}
+	}
 }
 
 func (b *Board) Add2() {
@@ -53,4 +57,26 @@ func (b *Board) isFull() bool {
 		}
 	}
 	return true
+}
+
+func (b *Board) Reverse() *Board {
+	board := NewBoard()
+	for i, row := range b.cells {
+		r := b.ReverseRow(row)
+		board.cells[i] = r
+	}
+	return board
+}
+
+func (b *Board) ReverseRow(row []int) []int {
+	newNumbers := make([]int, 0, len(row))
+	for i := len(row) - 1; i >= 0; i-- {
+		newNumbers = append(newNumbers, row[i])
+	}
+	fmt.Printf("> %v\n", newNumbers)
+	return newNumbers
+}
+
+func (b *Board) Set(row int, col int, val int) {
+	b.cells[row][col] = val
 }
