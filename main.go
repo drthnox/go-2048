@@ -34,6 +34,7 @@ func main() {
 		fmt.Printf("%s\n", board.ToString())
 		if gameLogic.isFinished() {
 			fmt.Println("Board is full, cannot continue")
+			fmt.Printf("Final Score: %d\n", gameLogic.GetScore())
 			break
 		} else {
 			fmt.Println("Empty cells remain, can continue")

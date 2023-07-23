@@ -15,7 +15,7 @@ func NewGameLogic(board *Board) *GameLogic {
 }
 
 func (gameLogic *GameLogic) GameState() string {
-	// check if board is full
+
 	if gameLogic.board.isFull() {
 		return FULL
 	}
@@ -23,8 +23,15 @@ func (gameLogic *GameLogic) GameState() string {
 	return WIN
 }
 
-func HasMetWinCon(board *Board) bool {
-	return false
+func (gameLogic *GameLogic) HasMetWinCon() bool {
+	for _, row := range gameLogic.board.cells {
+		for i, _ := range row {
+			if row[i] != 2048 {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 func (gameLogic *GameLogic) moveRight() {
@@ -60,4 +67,10 @@ func (gameLogic *GameLogic) GetResult() string {
 
 func (gameLogic *GameLogic) isFinished() bool {
 	return gameLogic.board.isFull()
+}
+
+var score = 0
+
+func (gameLogic *GameLogic) GetScore() int {
+	return score
 }
