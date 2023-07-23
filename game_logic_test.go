@@ -15,7 +15,21 @@ func TestWinConditions(t *testing.T) {
 		}
 		gameLogic := &GameLogic{board: board}
 
+		assert.True(t, gameLogic.board.isFull())
 		assert.True(t, gameLogic.HasMetWinCon())
+	})
+
+	t.Run("Has Lost", func(t *testing.T) {
+		board := NewBoard()
+		for _, row := range board.cells {
+			for i, _ := range row {
+				row[i] = 128
+			}
+		}
+		gameLogic := &GameLogic{board: board}
+
+		assert.True(t, gameLogic.board.isFull())
+		assert.False(t, gameLogic.HasMetWinCon())
 	})
 }
 
