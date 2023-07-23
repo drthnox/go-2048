@@ -9,8 +9,6 @@ type Board struct {
 	cells [][]int
 }
 
-var startCount = 2
-
 func (b *Board) Init() {
 	b.cells = Make2D[int](4, 4)
 	b.Add2()
@@ -35,6 +33,26 @@ func (b *Board) ToString() string {
 		s += fmt.Sprintf("%v\n", b.cells[i])
 	}
 	return s
+}
+
+func (b *Board) isEmpty() bool {
+	for cell, _ := range b.cells {
+		if cell != 0 {
+			return false
+		}
+	}
+	return true
+}
+
+func (b *Board) isFull() bool {
+	for _, row := range b.cells {
+		for _, val := range row {
+			if val == 0 {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 func Make2D[T any](n, m int) [][]T {
