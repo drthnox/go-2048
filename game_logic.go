@@ -1,7 +1,7 @@
 package main
 
 const (
-	FULL string = "FULL"
+	LOSS string = "LOSS"
 	WIN  string = "WIN"
 )
 
@@ -16,11 +16,11 @@ func NewGameLogic(board *Board) *GameLogic {
 
 func (gameLogic *GameLogic) GameState() string {
 
-	if gameLogic.board.isFull() {
-		return FULL
+	if gameLogic.HasMetWinCon() {
+		return WIN
 	}
 
-	return WIN
+	return LOSS
 }
 
 func (gameLogic *GameLogic) HasMetWinCon() bool {
@@ -37,23 +37,38 @@ func (gameLogic *GameLogic) HasMetWinCon() bool {
 	return false
 }
 
-func (gameLogic *GameLogic) moveRight() {
-	// move all cells right
-	// iterate over each rowNum
-	//for _, row := range board.cells {
-	//	for i, cell := range row {
-	//		if i < len(row) {
-	//			if row[i+1] == 0 {
-	//				row[i+1] = row[i]
-	//				row[i] = 0
-	//			}
-	//		}
-	//	}
-	//}
+func moveRight(grid [][]int) ([][]int, bool) {
+	//# to move right we just reverse
+	//# the matrix
+	newGrid := Reverse(grid)
+
+	//# then move left
+	newGrid, changed := moveLeft(newGrid)
+
+	//# then again reverse matrix will
+	//# give us desired result
+	newGrid = Reverse(newGrid)
+
+	return newGrid, changed
 }
 
-func (gameLogic *GameLogic) moveLeft() {
-	// move all cells left
+// move all cells left
+func moveLeft(grid [][]int) ([][]int, bool) {
+	//# first compress the grid
+	newGrid, changed1 := Compress(grid)
+
+	//# then merge the cells.
+	newGrid, changed2 := Merge(newGrid)
+
+	changed := changed1 || changed2
+
+	//# again compress after merging.
+	newGrid, _ = Compress(newGrid)
+
+	//# return new matrix and bool changed
+	//# telling whether the grid is same
+	//# or different
+	return newGrid, changed
 }
 
 func (gameLogic *GameLogic) moveDown() {
