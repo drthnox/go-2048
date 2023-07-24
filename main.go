@@ -26,12 +26,17 @@ func main() {
 		case "s":
 			gameLogic.moveDown()
 		case "a":
-			gameLogic.moveLeft()
+			fmt.Println("LEFT")
+			fmt.Printf("BEFORE:\n%s\n", board.ToString())
+			board.cells, _ = moveLeft(board.cells)
+			fmt.Printf("AFTER:\n%s\n", board.ToString())
 		case "d":
-			gameLogic.moveRight()
+			fmt.Println("RIGHT")
+			fmt.Printf("BEFORE:\n%s\n", board.ToString())
+			board.cells, _ = moveRight(board.cells)
+			fmt.Printf("AFTER:\n%s\n", board.ToString())
 		}
 		board.Add2()
-		fmt.Printf("%s\n", board.ToString())
 		if gameLogic.isFinished() {
 			fmt.Println("Board is full, cannot continue")
 			fmt.Printf("Final Score: %d\n", gameLogic.GetScore())
