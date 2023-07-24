@@ -17,35 +17,46 @@ func main() {
 			break
 		}
 		fmt.Printf("BEFORE:\n%s\n", board.ToString())
-		switch input {
-		case "?":
-			showHelp()
-		case "h":
-			showHelp()
-		case "w":
-			fmt.Println("UP")
-			board.cells, _ = gameLogic.moveUp(board.cells)
-		case "s":
-			fmt.Println("DOWN")
-			board.cells, _ = gameLogic.moveDown(board.cells)
-		case "a":
-			fmt.Println("LEFT")
-			board.cells, _ = moveLeft(board.cells)
-		case "d":
-			fmt.Println("RIGHT")
-			board.cells, _ = moveRight(board.cells)
-		}
+		handleInput(input, board)
 		fmt.Printf("AFTER:\n%s\n", board.ToString())
 		board.Add2()
-		if gameLogic.isFinished() {
-			fmt.Println("Board is full, cannot continue")
-			fmt.Printf("Final Score: %d\n", gameLogic.GetScore())
-			break
-		} else {
-			fmt.Println("Empty cells remain, can continue")
+		if checkGameState(gameLogic) {
+			os.Exit(0)
 		}
 	}
 	fmt.Printf("Game Over! Result is %v\n", gameLogic.GetResult())
+}
+
+func checkGameState(gameLogic *GameLogic) bool {
+	if gameLogic.isFinished() {
+		fmt.Println("Board is full, cannot continue")
+		fmt.Printf("Final Score: %d\n", gameLogic.GetScore())
+		return true
+	} else {
+		fmt.Println("Empty cells remain, can continue")
+	}
+	return false
+}
+
+func handleInput(input string, board *Board) {
+	switch input {
+	case "?":
+		showHelp()
+	case "h":
+		showHelp()
+	case "w":
+		fmt.Println("UP")
+		board.cells, _ = moveUp(board.cells)
+	case "s":
+		fmt.Println("DOWN")
+		board.cells, _ = moveDown(board.cells)
+	case "a":
+		fmt.Println("LEFT")
+		board.cells, _ = moveLeft(board.cells)
+	case "d":
+		fmt.Println("RIGHT")
+		board.cells, _ = moveRight(board.cells)
+	}
 }
 
 func getInput(reader *bufio.Reader) string {
