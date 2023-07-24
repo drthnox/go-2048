@@ -16,26 +16,26 @@ func main() {
 		if input == "q" {
 			break
 		}
+		fmt.Printf("BEFORE:\n%s\n", board.ToString())
 		switch input {
 		case "?":
 			showHelp()
 		case "h":
 			showHelp()
 		case "w":
-			gameLogic.moveUp()
+			fmt.Println("UP")
+			gameLogic.moveUp(board.cells)
 		case "s":
-			gameLogic.moveDown()
+			fmt.Println("DOWN")
+			gameLogic.moveDown(board.cells)
 		case "a":
 			fmt.Println("LEFT")
-			fmt.Printf("BEFORE:\n%s\n", board.ToString())
 			board.cells, _ = moveLeft(board.cells)
-			fmt.Printf("AFTER:\n%s\n", board.ToString())
 		case "d":
 			fmt.Println("RIGHT")
-			fmt.Printf("BEFORE:\n%s\n", board.ToString())
 			board.cells, _ = moveRight(board.cells)
-			fmt.Printf("AFTER:\n%s\n", board.ToString())
 		}
+		fmt.Printf("AFTER:\n%s\n", board.ToString())
 		board.Add2()
 		if gameLogic.isFinished() {
 			fmt.Println("Board is full, cannot continue")
