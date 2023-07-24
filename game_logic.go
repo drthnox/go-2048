@@ -71,12 +71,34 @@ func moveLeft(grid [][]int) ([][]int, bool) {
 	return newGrid, changed
 }
 
-func (gameLogic *GameLogic) moveDown() {
+func (gameLogic *GameLogic) moveDown(grid [][]int) ([][]int, bool) {
 	// move all cells down
+	//# to move down we take transpose
+	newGrid := Transpose(grid)
+
+	//# move right and then again
+	newGrid, changed := moveRight(newGrid)
+
+	//# take transpose will give desired
+	//# results.
+	newGrid = Transpose(newGrid)
+	return newGrid, changed
 }
 
-func (gameLogic *GameLogic) moveUp() {
+func (gameLogic *GameLogic) moveUp(grid [][]int) ([][]int, bool) {
 	// move all cells up
+	//# to move up we just take
+	//# transpose of matrix
+	newGrid := Transpose(grid)
+
+	//# then move left (calling all
+	//# included functions) then
+	newGrid, changed := moveLeft(newGrid)
+
+	//# again take transpose will give
+	//# desired results
+	newGrid = Transpose(newGrid)
+	return newGrid, changed
 }
 
 func (gameLogic *GameLogic) GetResult() string {
