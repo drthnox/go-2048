@@ -24,10 +24,10 @@ func main() {
 			showHelp()
 		case "w":
 			fmt.Println("UP")
-			gameLogic.moveUp(board.cells)
+			board.cells, _ = gameLogic.moveUp(board.cells)
 		case "s":
 			fmt.Println("DOWN")
-			gameLogic.moveDown(board.cells)
+			board.cells, _ = gameLogic.moveDown(board.cells)
 		case "a":
 			fmt.Println("LEFT")
 			board.cells, _ = moveLeft(board.cells)
